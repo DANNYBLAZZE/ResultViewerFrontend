@@ -19,11 +19,9 @@ export default function Login() {
 
     const onSubmit = (ev) => {
         ev.preventDefault();
-        signIn(formData.matNo, formData.password).then((signedIn) => {
-            if (signedIn) {
-                console.log("signed in");
-                navigate("/home");
-            }
+        signIn(formData.matNo, formData.password).then(() => {
+            console.log("signed in");
+            navigate("/home");
         });
     };
     // };
@@ -48,7 +46,9 @@ export default function Login() {
                             name="MatNo"
                             className="border border-black w-full"
                             value={formData.matNo}
-                            onChange={(ev) => onChangeText("matNo", ev.target.value)}
+                            onChange={(ev) =>
+                                onChangeText("matNo", ev.target.value)
+                            }
                         />
                     </div>
                     <div className="flex gap-4">
@@ -61,7 +61,9 @@ export default function Login() {
                             name="password"
                             className="border border-black w-full"
                             value={formData.password}
-                            onChange={(ev) => onChangeText("password", ev.target.value)}
+                            onChange={(ev) =>
+                                onChangeText("password", ev.target.value)
+                            }
                         />
                     </div>
                 </div>
