@@ -5,24 +5,21 @@ import StudentNavigation from "../components/StudentNavigation";
 import clsx from "clsx";
 import BlankProfile from "../img/blank-profile.png";
 
-export default function Profile() {
-    const {getUserData} = useUser();
+export default function LectuerProfile() {
+    const {getLecturerProfile} = useUser();
     const [userData, setUserData] = useState({});
     const [showResults, setShowResults] = useState(false);
 
     const fields = [
-        {label: "Mat No", data: "mat_no"},
+        {label: "Staff ID", data: "id"},
         {label: "First Name", data: "first_name"},
         {label: "Last Name", data: "last_name"},
         {label: "Email", data: "email"},
-        {label: "Department", data: "department_code"},
     ];
 
     useEffect(() => {
-        getUserData().then((data) => setUserData(data));
+        getLecturerProfile().then((data) => setUserData(data));
     }, []);
-
-    console.log("userData", userData);
 
     return (
         <div className="p-10">

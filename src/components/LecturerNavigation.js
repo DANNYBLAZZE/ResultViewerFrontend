@@ -3,7 +3,7 @@ import {Link, Outlet, useNavigate} from "react-router-dom";
 import clsx from "clsx";
 import { useUser } from "../context/UserContext";
 
-export default function StudentNavigation() {
+export default function LecturerNavigation() {
     const [currentNav, setCurrentNav] = useState(0);
     const {signOut} = useUser();
     const navigate = useNavigate();
@@ -11,11 +11,15 @@ export default function StudentNavigation() {
     const nav = [
         {
             name: "Profile",
-            route: "/student/home",
+            route: "/lecturer/home",
         },
         {
-            name: "My Result",
-            route: "/student/my-result",
+            name: "View Student Result",
+            route: "/lecturer/my-result",
+        },
+        {
+            name: "Upload Result",
+            route: "/lecturer/upload-result",
         },
     ];
 
@@ -33,7 +37,7 @@ export default function StudentNavigation() {
         <div className="grid grid-cols-6">
             <div className="col-span-1 h-screen flex flex-col items-center">
                 <div className="font-bold text-2xl p-3 text-center mt-10">
-                    Student Portal
+                    Lectuer Portal
                 </div>
                 <div className="mt-7 flex flex-col gap-4 w-4/5">
                     {nav.map((item, index) => {
