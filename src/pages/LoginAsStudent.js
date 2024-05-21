@@ -11,10 +11,8 @@ export default function LoginAsStudent() {
 
     const onSubmit = async () => {
         await studentSignIn(matNo, password);
-        navigate("/");
+        navigate("/student/home");
     }
-
-
 
     return (
         <div className="flex flex-col w-screen justify-center p-5 items-center h-screen">

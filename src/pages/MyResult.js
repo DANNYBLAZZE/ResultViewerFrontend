@@ -5,7 +5,7 @@ import clsx from "clsx";
 import ViewResult from "../components/ViewResult";
 
 export default function MyResult() {
-    const {data} = useFetch("/api/get_result", {
+    const {data} = useFetch("/api/student/get_result", {
         method: "GET",
         credentials: "include",
     });

@@ -149,7 +149,7 @@ export const UserProvider = ({children}) => {
     };
 
     const getStudentProfile = async () => {
-        return fetch(`/api/get_details`, {
+        return fetch(`/api/student/get_details`, {
             method: "GET",
             credentials: "include",
         })
