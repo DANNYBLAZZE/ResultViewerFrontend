@@ -46,6 +46,7 @@ export default function ChooseRole() {
                             Go to Login
                         </div>
                     </div>
+                    <div className="ml-auto mt-2" style={{color: "#17A2B8"}} onClick={() => navigate("/create-account")}>Don't have an account?</div>
                 </div>
             </div>
         </div>

@@ -10,6 +10,9 @@ import LoginAsStudent from "./pages/LoginAsStudent";
 import LoginAsLecturer from "./pages/LoginAsLecturer";
 import LecturerNavigation from "./components/LecturerNavigation";
 import LectuerProfile from "./pages/LecturerProfile";
+import LecturerViewResult from "./pages/LecturerViewResult";
+import CreateAccount from "./pages/CreateAccount";
+import UploadResult from "./pages/UploadResult";
 
 export default function App() {
     return (
@@ -18,11 +21,13 @@ export default function App() {
             <Route path="/login/student" element={<LoginAsStudent />} />
             <Route path="/login/lecturer" element={<LoginAsLecturer />} />
             <Route path="/login" element={<ChooseRole />} />
+            <Route path="/create-account" element={<CreateAccount/>}/>
 
             <Route path="/" element={<ProtectedRoute />}>
                 <Route path="/lecturer" element={<LecturerNavigation />}>
                     <Route path="home" element={<LectuerProfile />} />
-                    <Route path="my-result" element={<MyResult />} />
+                    <Route path="view-student-result" element={<LecturerViewResult />} />
+                    <Route path="upload-result" element={<UploadResult />} />
                 </Route>
                 <Route path="/student" element={<StudentNavigation />}>
                     <Route path="home" element={<StudentProfile />} />

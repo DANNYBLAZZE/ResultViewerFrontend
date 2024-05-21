@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useUser} from "../context/UserContext";
-import Results from "../components/Results";
+import Results from "../components/ViewResult";
 import StudentNavigation from "../components/StudentNavigation";
 import clsx from "clsx";
 import BlankProfile from "../img/blank-profile.png";

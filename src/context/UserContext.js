@@ -63,6 +63,52 @@ export const UserProvider = ({children}) => {
         
     };
 
+    const studentRegister = async (data) => {
+        console.log(data);
+        return fetch("/api/register/student", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+        })
+            .then((res) => {
+                // console.log(res);
+                if (!res.ok) throw new Error();
+                return res.json();
+            })
+            .then((data) => {
+                dispatch({type: actionTypes.SIGN_IN, payload: data.id});
+
+                // console.log(data);
+            })
+        
+    };
+
+    const lecturerRegister = async (data) => {
+        console.log(data);
+        return fetch("/api/register/lecturer", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+        })
+            .then((res) => {
+                // console.log(res);
+                if (!res.ok) throw new Error();
+                return res.json();
+            })
+            .then((data) => {
+                dispatch({type: actionTypes.SIGN_IN, payload: data.id});
+
+                // console.log(data);
+            })
+        
+    };
+
     const lecturerSignIn = async (staffId, password) => {
         return fetch("/api/login/lecturer", {
             method: "POST",
@@ -146,7 +192,7 @@ export const UserProvider = ({children}) => {
 
     return (
         <UserContext.Provider
-            value={{state, studentSignIn, lecturerSignIn, signOut,  getStudentProfile, getLecturerProfile, signUp, signOut}}
+            value={{state, studentSignIn, lecturerSignIn, signOut,  getStudentProfile, getLecturerProfile, signUp, signOut, studentRegister, lecturerRegister}}
         >
             {children}
         </UserContext.Provider>

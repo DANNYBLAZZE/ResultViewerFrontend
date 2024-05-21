@@ -15,7 +15,7 @@ export default function LecturerNavigation() {
         },
         {
             name: "View Student Result",
-            route: "/lecturer/my-result",
+            route: "/lecturer/view-student-result",
         },
         {
             name: "Upload Result",
