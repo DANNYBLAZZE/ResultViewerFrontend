@@ -4,7 +4,7 @@ import Select from "@mui/material/Select";
 import {MenuItem} from "@mui/material";
 import MaterialCSS from "./material.css"
 
-export default function SelectUserAccount({setRole, formData, setFormData, roles, changePage, fields, role}) {
+export default function SelectUserAccount({setRole, formData, setFormData, roles, changePage, fields, role, changeRole}) {
     const navigate = useNavigate();
 
     const onChangeText = (key, value) => {
@@ -50,7 +50,7 @@ export default function SelectUserAccount({setRole, formData, setFormData, roles
                                             }
                                         }
                                     }}
-                                    onChange={(ev) => setRole(ev.target.value)}
+                                    onChange={(ev) => changeRole(ev.target.value)}
                                 >
                                     {roles.map((item) => {
                                         return (

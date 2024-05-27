@@ -2,8 +2,17 @@ import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {useUser} from "../context/UserContext";
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import clsx from "clsx";
 
-export default function AddDetails({changePage, role, formData, setFormData, onSubmit}) {
+export default function AddDetails({
+    changePage,
+    role,
+    formData,
+    setFormData,
+    loading,
+    error,
+    onSubmit,
+}) {
     const {lecturerSignIn} = useUser();
     const navigate = useNavigate();
 
@@ -18,7 +27,7 @@ export default function AddDetails({changePage, role, formData, setFormData, onS
                 style={{maxWidth: "500px"}}
             >
                 <div onClick={() => changePage(0)} className="mb-4">
-                    <span  className="p-2 rounded-full hover:bg-gray-100">
+                    <span className="p-2 rounded-full hover:bg-gray-100">
                         <ArrowBack />
                     </span>
                 </div>
@@ -26,7 +35,7 @@ export default function AddDetails({changePage, role, formData, setFormData, onS
                     <div className="font-bold text-lg">
                         Enter your information
                     </div>
-                    <div className="mt-5 flex flex-col gap-3">
+                    <div className="mt-5 flex flex-col gap-3 mb-5">
                         <div className="flex flex-col gap-2">
                             <div>First Name</div>
                             <input
@@ -60,18 +69,23 @@ export default function AddDetails({changePage, role, formData, setFormData, onS
                                 className="bg-gray-100 px-3 py-2 rounded-md"
                             />
                         </div>
-                        
-                        {role == "STUDENT" && <div className="flex flex-col gap-2">
-                            <div>Department Code</div>
-                            <input
-                                placeholder="Department Code"
-                                value={formData.departmentCode}
-                                onChange={(ev) =>
-                                    onChangeText("departmentCode", ev.target.value)
-                                }
-                                className="bg-gray-100 px-3 py-2 rounded-md"
-                            />
-                        </div>}
+
+                        {role == "STUDENT" && (
+                            <div className="flex flex-col gap-2">
+                                <div>Department Code</div>
+                                <input
+                                    placeholder="Department Code"
+                                    value={formData.departmentCode}
+                                    onChange={(ev) =>
+                                        onChangeText(
+                                            "departmentCode",
+                                            ev.target.value
+                                        )
+                                    }
+                                    className="bg-gray-100 px-3 py-2 rounded-md"
+                                />
+                            </div>
+                        )}
                         <div className="flex flex-col gap-2">
                             <div>Password</div>
                             <input
@@ -84,13 +98,23 @@ export default function AddDetails({changePage, role, formData, setFormData, onS
                             />
                         </div>
                     </div>
-                    <div
-                        className="text-white mt-7 px-10 py-2 text-center rounded-md"
+                    {error && (
+                        <div className="mt-5 bg-red-400 border-2 border-red-500 px-3 py-2 rounded-md mb-3">
+                            {error}
+                        </div>
+                    )}
+
+                    <button
+                        disabled={loading}
+                        className={clsx(
+                            "w-full text-white px-10 py-2 text-center rounded-md",
+                            loading && "cursor-not-allowed opacity-30"
+                        )}
                         onClick={() => onSubmit()}
                         style={{backgroundColor: "#17A2B8"}}
                     >
-                        Create Account
-                    </div>
+                        <div>Create Account</div>
+                    </button>
                 </div>
             </div>
         </div>

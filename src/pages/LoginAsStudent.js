@@ -64,6 +64,7 @@ export default function LoginAsStudent() {
                         </div>
                     </div>
                     <button
+                        disabled={loading}
                         className={clsx("w-full text-white mt-5 px-10 py-2 text-center rounded-md", loading && "pointer-events-none cursor-not-allowed opacity-30")}
                         onClick={() => onSubmit()}
                         style={{backgroundColor: "#17A2B8"}}

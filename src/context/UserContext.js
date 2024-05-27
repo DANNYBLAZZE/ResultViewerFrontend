@@ -76,9 +76,9 @@ export const UserProvider = ({children}) => {
             },
             credentials: "include",
         })
-            .then((res) => {
+            .then(async (res) => {
                 // console.log(res);
-                if (!res.ok) throw new Error();
+                if (!res.ok) throw new Error(await res.text());
                 return res.json();
             })
             .then((data) => {
@@ -99,9 +99,9 @@ export const UserProvider = ({children}) => {
             },
             credentials: "include",
         })
-            .then((res) => {
+            .then(async (res) => {
                 // console.log(res);
-                if (!res.ok) throw new Error();
+                if (!res.ok) throw new Error(await res.text());
                 return res.json();
             })
             .then((data) => {
@@ -121,9 +121,9 @@ export const UserProvider = ({children}) => {
             },
             credentials: "include",
         })
-            .then((res) => {
+            .then(async (res) => {
                 // console.log(res);
-                if (!res.ok) throw new Error();
+                if (!res.ok) throw new Error(await res.text());
                 return res.json();
             })
             .then((data) => {

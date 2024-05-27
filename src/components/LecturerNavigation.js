@@ -1,10 +1,11 @@
-import React, {useState} from "react";
-import {Link, Outlet, useNavigate} from "react-router-dom";
+import React, {useEffect, useLayoutEffect, useState} from "react";
+import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
 import clsx from "clsx";
 import { useUser } from "../context/UserContext";
 
 export default function LecturerNavigation() {
     const [currentNav, setCurrentNav] = useState(0);
+    const location = useLocation();
     const {signOut} = useUser();
     const navigate = useNavigate();
 
@@ -22,6 +23,16 @@ export default function LecturerNavigation() {
             route: "/lecturer/upload-result",
         },
     ];
+
+    useLayoutEffect(() => {
+        const path = location.pathname;
+        nav.forEach((item, index) => {
+            if (item.route == path && currentNav !== index){
+                handleRouteChange(index);
+            }
+        })
+    }, [location])
+
 
     const handleRouteChange = (index) => {
         navigate(nav[index]["route"]);
@@ -44,7 +55,7 @@ export default function LecturerNavigation() {
                         return (
                             <div
                                 onClick={() => handleRouteChange(index)}
-                                className="w-full"
+                                className="w-full cursor-pointer"
                             >
                                 <div
                                     className={clsx(

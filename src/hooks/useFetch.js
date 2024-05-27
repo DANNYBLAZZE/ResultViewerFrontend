@@ -3,21 +3,23 @@ import {useState, useEffect, memo, useMemo} from "react";
 function useFetch(url, options) {
     const [data, setData] = useState(null);
     const reqOptions = useMemo(() => options, [JSON.stringify(options)])
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
                 const response = await fetch(url, reqOptions);
                 if (!response.ok) {
-                    throw new Error("Network response was not ok");
+                    throw new Error(await response.text());
                 }
                 const jsonData = await response.json();
                 // console.log("json", jsonData);
                 setData(jsonData);
             } catch (error) {
-                setError(error);
+                console.log(error);
+                setError(error.message);
             } finally {
                 setLoading(false);
             }
