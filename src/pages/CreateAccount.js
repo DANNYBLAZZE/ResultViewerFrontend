@@ -10,6 +10,8 @@ export default function ChooseRole() {
     const roles = ["STUDENT", "LECTURER"];
     const [role, setRole] = useState("STUDENT");
     const [page, setPage] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const fields = {
         STUDENT: {
@@ -39,40 +41,67 @@ export default function ChooseRole() {
     };
 
     const onStudentRegister = async () => {
+        setLoading(true);
         await studentRegister({
             mat_no: formData.id,
             first_name: formData.firstName,
             last_name: formData.lastName,
             department_code: formData.departmentCode,
             email: formData.email,
-            password: formData.password
-        });
-        navigate(`/student/home`);
+            password: formData.password,
+        })
+            .then(() => {
+                navigate(`/student/home`);
+            })
+            .catch((error) => {
+                setError(error.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     const onLecturerRegister = async () => {
+        setLoading(true);
         await lecturerRegister({
             staff_id: formData.id,
             first_name: formData.firstName,
             last_name: formData.lastName,
             email: formData.email,
-            password: formData.password
-        });
-        navigate(`/lecturer/home`);
+            password: formData.password,
+        })
+            .then(() => {
+                navigate(`/lecturer/home`);
+            })
+            .catch((error) => {
+                setError(error.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     const changePage = (newPage) => {
         console.log(newPage, page);
-        if (newPage == 1 && page == 0) {
-            setFormData({
-                id: formData.id,
-            });
-        }
+        // if (newPage == 1 && page == 0) {
+        //     setFormData({
+        //         id: formData.id,
+        //     });
+        // }
         setPage(newPage);
+    };
+
+    const changeRole = (role) => {
+        setFormData({
+            id: formData.id,
+        });
+        setRole(role);
+        setError("");
     };
 
     return page == 0 ? (
         <SelectUserAccount
+            changeRole={changeRole}
             formData={formData}
             roles={roles}
             setFormData={setFormData}
@@ -83,6 +112,8 @@ export default function ChooseRole() {
         />
     ) : (
         <AddDetails
+            loading={loading}
+            error={error}
             changePage={changePage}
             formData={formData}
             setFormData={setFormData}

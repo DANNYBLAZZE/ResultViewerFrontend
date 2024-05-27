@@ -1,6 +1,11 @@
 import React from "react";
 import {UserProvider} from "./context/UserContext";
+import { CookiesProvider } from 'react-cookie'
 
 export default function AppProvider({children}) {
-    return <UserProvider>{children}</UserProvider>;
+    return (
+        <CookiesProvider>
+            <UserProvider>{children}</UserProvider>
+        </CookiesProvider>
+    );
 }
