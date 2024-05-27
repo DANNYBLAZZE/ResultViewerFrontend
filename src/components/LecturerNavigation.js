@@ -48,7 +48,7 @@ export default function LecturerNavigation() {
         <div className="grid grid-cols-6">
             <div className="col-span-1 h-screen flex flex-col items-center">
                 <div className="font-bold text-2xl p-3 text-center mt-10">
-                    Lectuer Portal
+                    Lecturer Portal
                 </div>
                 <div className="mt-7 flex flex-col gap-4 w-4/5">
                     {nav.map((item, index) => {
@@ -71,7 +71,7 @@ export default function LecturerNavigation() {
                     })}
                 </div>
                 <div className="mt-7 w-4/5" onClick={() => handleSignOut()}>
-                    <div className="text-red-600 self-start p-3 ">
+                    <div className="cursor-pointer text-red-600 self-start p-3 ">
                         Log Out
                     </div>
                 </div>

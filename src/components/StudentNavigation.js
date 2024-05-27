@@ -1,10 +1,11 @@
-import React, {useState} from "react";
-import {Link, Outlet, useNavigate} from "react-router-dom";
+import React, {useLayoutEffect, useState} from "react";
+import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
 import clsx from "clsx";
 import { useUser } from "../context/UserContext";
 
 export default function StudentNavigation() {
     const [currentNav, setCurrentNav] = useState(0);
+    const location = useLocation();
     const {signOut} = useUser();
     const navigate = useNavigate();
 
@@ -18,6 +19,16 @@ export default function StudentNavigation() {
             route: "/student/my-result",
         },
     ];
+
+    useLayoutEffect(() => {
+        const path = location.pathname;
+        nav.forEach((item, index) => {
+            if (item.route == path && currentNav !== index){
+                handleRouteChange(index);
+            }
+        })
+    }, [location])
+
 
     const handleRouteChange = (index) => {
         navigate(nav[index]["route"]);
@@ -40,7 +51,7 @@ export default function StudentNavigation() {
                         return (
                             <div
                                 onClick={() => handleRouteChange(index)}
-                                className="w-full"
+                                className="w-full cursor-pointer"
                             >
                                 <div
                                     className={clsx(
@@ -55,7 +66,7 @@ export default function StudentNavigation() {
                         );
                     })}
                 </div>
-                <div className="mt-7 w-4/5" onClick={() => handleSignOut()}>
+                <div className="mt-7 w-4/5 cursor-pointer" onClick={() => handleSignOut()}>
                     <div className="text-red-600 self-start p-3 ">
                         Log Out
                     </div>

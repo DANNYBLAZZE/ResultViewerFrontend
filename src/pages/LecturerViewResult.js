@@ -21,7 +21,7 @@ export default function LecturerViewResult() {
     console.log("loading", loading);
 
     return (
-        <div className="bg-gray-100 p-3 h-screen">
+        <div className="bg-gray-100 p-3 min-h-screen">
             <div className="bg-white p-3 mb-3 rounded-2xl">
                 <div className="text-xl font-bold">
                     Enter Matriculation Number
