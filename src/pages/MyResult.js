@@ -9,5 +9,9 @@ export default function MyResult() {
         method: "GET",
         credentials: "include",
     });
-    return <ViewResult data={data}/>
+    return (
+        <div className="bg-gray-100 p-3 min-h-screen">
+            <ViewResult data={data} />
+        </div>
+    );
 }

@@ -28,12 +28,12 @@ export default function ViewResult({data}) {
         [data]
     );
 
-    console.log("data", GPA);
+    console.log("gpa", GPA, data);
 
     return (
         <div className="flex flex-col gap-4">
             <div className="bg-white p-3 rounded-2xl">
-                <div className="font-bold text-xl">GPA - {GPA}</div>
+                <div className="font-bold text-xl">GPA - {isNaN(GPA) ? "_.__" : GPA}</div>
             </div>
             <div className="bg-white p-3 gap-3 flex flex-col rounded-2xl">
                 <div className="text-xl font-bold">Results</div>
