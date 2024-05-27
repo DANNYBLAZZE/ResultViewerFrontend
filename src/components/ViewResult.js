@@ -31,7 +31,7 @@ export default function ViewResult({data}) {
     console.log("data", GPA);
 
     return (
-        <div className="bg-gray-100 p-3 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
             <div className="bg-white p-3 rounded-2xl">
                 <div className="font-bold text-xl">GPA - {GPA}</div>
             </div>

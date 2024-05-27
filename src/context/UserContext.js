@@ -1,4 +1,5 @@
-import {createContext, useContext, useReducer, useState} from "react";
+import {createContext, useContext, useEffect, useReducer, useState} from "react";
+import { useCookies } from "react-cookie";
 
 export const UserContext = createContext();
 
@@ -39,6 +40,8 @@ const reducer = (state, action) => {
 export const UserProvider = ({children}) => {
     // const [sa``, setUserState] = useState({});
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [cookie, setCookie, removeCookie] = useCookies(["user"]);
+    const [appIsReady, setAppIsReady] = useState(false);
 
     const studentSignIn = async (mat_no, password) => {
         console.log(mat_no, password);
@@ -50,13 +53,13 @@ export const UserProvider = ({children}) => {
             },
             credentials: "include",
         })
-            .then((res) => {
+            .then(async (res) => {
                 // console.log(res);
-                if (!res.ok) throw new Error();
+                if (!res.ok) throw new Error(await res.text());
                 return res.json();
             })
             .then((data) => {
-                dispatch({type: actionTypes.SIGN_IN, payload: data.id});
+                dispatch({type: actionTypes.SIGN_IN, payload: data});
 
                 // console.log(data);
             })
@@ -79,7 +82,7 @@ export const UserProvider = ({children}) => {
                 return res.json();
             })
             .then((data) => {
-                dispatch({type: actionTypes.SIGN_IN, payload: data.id});
+                dispatch({type: actionTypes.SIGN_IN, payload: data});
 
                 // console.log(data);
             })
@@ -102,7 +105,7 @@ export const UserProvider = ({children}) => {
                 return res.json();
             })
             .then((data) => {
-                dispatch({type: actionTypes.SIGN_IN, payload: data.id});
+                dispatch({type: actionTypes.SIGN_IN, payload: data});
 
                 // console.log(data);
             })
@@ -124,7 +127,7 @@ export const UserProvider = ({children}) => {
                 return res.json();
             })
             .then((data) => {
-                dispatch({type: actionTypes.SIGN_IN, payload: data.id});
+                dispatch({type: actionTypes.SIGN_IN, payload: data});
 
                 // console.log(data);
             })
@@ -142,7 +145,10 @@ export const UserProvider = ({children}) => {
             if (!res.ok) throw new Error();
             console.log("logged out");
             dispatch({type: actionTypes.SIGN_OUT});
-
+            removeCookie("user", {
+                secure: false,
+                maxAge: 3.1536e10,
+            });
         }).catch((error) => {
             console.log(error);
         })
@@ -190,9 +196,15 @@ export const UserProvider = ({children}) => {
 
     }
 
+    useEffect(() => {
+        console.log("sign back in", state, cookie);
+        dispatch({type: actionTypes.SIGN_IN, payload: cookie["user"]});
+        setAppIsReady(true);
+    }, [])
+
     return (
         <UserContext.Provider
-            value={{state, studentSignIn, lecturerSignIn, signOut,  getStudentProfile, getLecturerProfile, signUp, signOut, studentRegister, lecturerRegister}}
+            value={{state, appIsReady, studentSignIn, lecturerSignIn, signOut,  getStudentProfile, getLecturerProfile, signUp, signOut, studentRegister, lecturerRegister}}
         >
             {children}
         </UserContext.Provider>

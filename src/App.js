@@ -13,8 +13,12 @@ import LectuerProfile from "./pages/LecturerProfile";
 import LecturerViewResult from "./pages/LecturerViewResult";
 import CreateAccount from "./pages/CreateAccount";
 import UploadResult from "./pages/UploadResult";
+import HomePage from "./pages/HomePage";
+import { useUser } from "./context/UserContext";
 
 export default function App() {
+    const {appIsReady} = useUser();
+
     return (
         <Routes>
             {/* <Route path="/"> */}
@@ -23,7 +27,8 @@ export default function App() {
             <Route path="/login" element={<ChooseRole />} />
             <Route path="/create-account" element={<CreateAccount/>}/>
 
-            <Route path="/" element={<ProtectedRoute />}>
+
+            <Route path="/" element={<HomePage />}>
                 <Route path="/lecturer" element={<LecturerNavigation />}>
                     <Route path="home" element={<LectuerProfile />} />
                     <Route path="view-student-result" element={<LecturerViewResult />} />
