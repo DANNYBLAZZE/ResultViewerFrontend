@@ -4,18 +4,20 @@ import {json} from "react-router-dom";
 import clsx from "clsx";
 import ViewResult from "../components/ViewResult";
 import {CircularProgress} from "@mui/material";
+import useButtonFetch from "../hooks/useButtonFetch";
 
 export default function LecturerViewResult() {
     const [search, setSearch] = useState("");
     const [matNoInput, setMatNoInput] = useState("");
 
-    const {data, loading} = useFetch(search, {
+    const {data, loading, triggerFetch} = useButtonFetch(`/api/lecturer/${matNoInput}/get_result`, {
         method: "GET",
         credentials: "include",
     });
 
     const onSubmit = () => {
-        setSearch(`/api/lecturer/${matNoInput}/get_result`);
+        // setSearch(`/api/lecturer/${matNoInput}/get_result`);
+        triggerFetch();
     };
 
     console.log("loading", loading);

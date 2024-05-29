@@ -2,7 +2,6 @@ import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
 import clsx from "clsx";
 import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
 import {useUser} from "../context/UserContext";
 import {LogOutOutline} from "react-ionicons";
 import {ArrowBackOutline} from "react-ionicons";
