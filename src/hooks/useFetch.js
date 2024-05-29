@@ -3,7 +3,7 @@ import {useState, useEffect, memo, useMemo} from "react";
 function useFetch(url, options) {
     const [data, setData] = useState(null);
     const reqOptions = useMemo(() => options, [JSON.stringify(options)])
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {

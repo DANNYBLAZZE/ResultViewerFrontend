@@ -41,7 +41,7 @@ export default function LoginAsLecturer() {
                 )}
 
                 <div className="w-full px-3">
-                    <div className="font-bold text-lg">Lectuer</div>
+                    <div className="font-bold text-lg">Lecturer</div>
                     <div className="mt-5 flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
                             <div>Staff Id</div>

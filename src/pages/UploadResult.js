@@ -29,9 +29,9 @@ export default function UploadResult() {
     console.log(selectedFile);
     
     return (
-        <div className="p-5">
-            <div className="flex gap-3">
-                <div className="text-xl">Select file</div>
+        <div>
+            <div className="flex flex-wrap gap-3">
+                <div className="text-xl w-full md:w-auto">Select file</div>
                 <input type="file" accept=".csv" onChange={handleFileChange} />
             </div>
             <div
@@ -39,7 +39,7 @@ export default function UploadResult() {
                 onClick={() => onSubmit()}
                 style={{backgroundColor: "#17A2B8"}}
             >
-                Add to Database
+                Upload Result
             </div>
         </div>
     );

@@ -10,7 +10,7 @@ export default function MyResult() {
         credentials: "include",
     });
     return (
-        <div className="bg-gray-100 p-3 min-h-screen">
+        <div className="min-h-screen">
             <ViewResult data={data} />
         </div>
     );

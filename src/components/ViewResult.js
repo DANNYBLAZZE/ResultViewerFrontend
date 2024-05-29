@@ -1,6 +1,4 @@
 import React, {useMemo} from "react";
-import useFetch from "../hooks/useFetch";
-import {json} from "react-router-dom";
 import clsx from "clsx";
 
 export default function ViewResult({data}) {
@@ -32,14 +30,14 @@ export default function ViewResult({data}) {
 
     return (
         <div className="flex flex-col gap-4">
-            <div className="bg-white p-3 rounded-2xl">
+            <div className="bg-white rounded-2xl">
                 <div className="font-bold text-xl">GPA - {isNaN(GPA) ? "_.__" : GPA}</div>
             </div>
-            <div className="bg-white p-3 gap-3 flex flex-col rounded-2xl">
+            <div className="bg-white gap-3 flex flex-col rounded-2xl">
                 <div className="text-xl font-bold">Results</div>
                 <div>
-                    <div className="grid grid-cols-3 bg-gray-100 text-xl border-b-2">
-                        <div className="p-3">Course Code</div>
+                    <div className="grid grid-cols-4 bg-gray-100 text-lg md:text-xl border-b-2">
+                        <div className="p-3 col-span-2">Course Code</div>
                         <div className="p-3">Score</div>
                         <div className="p-3">Grade</div>
                     </div>
@@ -47,10 +45,10 @@ export default function ViewResult({data}) {
                         data.map((course) => {
                             return (
                                 <div
-                                    className="grid grid-cols-3 border"
+                                    className="grid grid-cols-4 border"
                                     key={course.id}
                                 >
-                                    <div className="p-3">
+                                    <div className="p-3 col-span-2">
                                         {course.course_code}
                                     </div>
                                     <div className="p-3">{course.score}</div>
