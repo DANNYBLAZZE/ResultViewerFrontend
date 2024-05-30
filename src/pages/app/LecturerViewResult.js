@@ -1,21 +1,23 @@
 import React, {useMemo, useState} from "react";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import {json} from "react-router-dom";
 import clsx from "clsx";
-import ViewResult from "../components/ViewResult";
+import ViewResult from "../../components/ViewResult";
 import {CircularProgress} from "@mui/material";
-import useButtonFetch from "../hooks/useButtonFetch";
+import useButtonFetch from "../../hooks/useButtonFetch";
+import SessionExpired from "../../components/SessionExpired";
 
 export default function LecturerViewResult() {
     const [search, setSearch] = useState("");
     const [matNoInput, setMatNoInput] = useState("");
 
-    const {data, loading, triggerFetch} = useButtonFetch(`/api/lecturer/${matNoInput}/get_result`, {
+    const {data, loading, error, triggerFetch} = useButtonFetch(`/api/lecturer/${matNoInput}/get_result`, {
         method: "GET",
         credentials: "include",
     });
 
     const onSubmit = () => {
+        
         // setSearch(`/api/lecturer/${matNoInput}/get_result`);
         triggerFetch();
     };
@@ -37,8 +39,8 @@ export default function LecturerViewResult() {
                     />
                     <div className="flex gap-1">
                         <button
-                            disabled={loading}
-                            className={clsx("text-white text-center px-3 py-2 flex justify-center items-center rounded-md", loading && "cursor-not-allowed opacity-30")}
+                            disabled={loading || matNoInput.length == 0}
+                            className={clsx("text-white text-center px-3 py-2 flex justify-center items-center rounded-md disabled:cursor-not-allowed disabled:opacity-30")}
                             onClick={() => onSubmit()}
                             style={{backgroundColor: "#17A2B8"}}
                         >
@@ -51,6 +53,9 @@ export default function LecturerViewResult() {
                 </div>
             </div>
             <ViewResult data={data} />
+            {
+                error && error.message == "Not Authorized" && <SessionExpired/>
+            }
         </div>
     );
 }

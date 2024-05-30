@@ -100,7 +100,7 @@ export default function AddDetails({
                     </div>
                     {error && (
                         <div className="mt-5 bg-red-400 border-2 border-red-500 px-3 py-2 rounded-md mb-3">
-                            {error}
+                            {error.message}
                         </div>
                     )}
 

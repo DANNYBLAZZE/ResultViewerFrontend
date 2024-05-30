@@ -16,7 +16,6 @@ export default function HomePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("current Path", currentPath);
         if (!appIsReady) return;
 
         if (currentPath == "/" && state.user) {
