@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {useUser} from "../context/UserContext";
+import {useUser} from "../../context/UserContext";
 import clsx from "clsx";
 
 export default function LoginAsLecturer() {
@@ -20,7 +20,7 @@ export default function LoginAsLecturer() {
             })
             .catch((error) => {
                 console.log(error.message);
-                setError(error.message);
+                setError(JSON.parse(error.message));
             })
             .finally(() => {
                 setLoading(false);
@@ -36,7 +36,7 @@ export default function LoginAsLecturer() {
                 <div className="text-4xl font-bold mb-10">Login Portal</div>
                 {error && (
                     <div className="bg-red-400 border-2 border-red-500 px-3 py-2 rounded-md mb-3">
-                        {error}
+                        {error.message}
                     </div>
                 )}
 
@@ -71,7 +71,7 @@ export default function LoginAsLecturer() {
                         Login
                     </button>
                     <a
-                        className="mt-5 text-center"
+                        className="mt-5 block text-center"
                         style={{color: "#17A2B8"}}
                         onClick={() => navigate("/login/student")}
                     >

@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {useUser} from "../context/UserContext";
-import Results from "./ViewResult";
-import StudentNavigation from "./StudentNavigation";
 import clsx from "clsx";
 import BlankProfile from "../img/blank-profile.png";
 import useFetch from "../hooks/useFetch";
+import SessionExpired from "./SessionExpired";
 
 export default function Profile({fields, profileUrl}) {
-    const {data: userData, loading} = useFetch(profileUrl, {method: "GET", credentials: "include"})
+    const {data: userData, error, loading} = useFetch(profileUrl, {method: "GET", credentials: "include"})
 
     if (loading) return <div></div>
 
@@ -26,12 +24,15 @@ export default function Profile({fields, profileUrl}) {
                                     item.label == "Department" && "uppercase"
                                 )}
                             >
-                                {userData[item.data]}
+                                {userData?.[item.data]}
                             </div>
                         </div>
                     );
                 })}
             </div>
+            {error && error.message == "Not Authorized" && <SessionExpired />}
+
+            
         </div>
     );
 }

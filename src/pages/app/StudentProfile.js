@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Profile from "../components/Profile";
+import Profile from "../../components/Profile";
 
 export default function StudentProfile() {
     const fields = [

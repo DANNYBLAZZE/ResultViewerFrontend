@@ -1,18 +1,18 @@
 import React from "react";
 import {Routes, Route, Navigate} from "react-router";
-import Home from "./pages/StudentProfile";
+import Home from "./pages/app/StudentProfile";
 import StudentNavigation from "./components/StudentNavigation";
-import MyResult from "./pages/MyResult";
-import StudentProfile from "./pages/StudentProfile";
-import ChooseRole from "./pages/ChooseRole";
+import MyResult from "./pages/app/MyResult";
+import StudentProfile from "./pages/app/StudentProfile";
+import ChooseRole from "./pages/auth/ChooseRole";
 import ProtectedRoute from "./components/ProtectedRoute";
-import LoginAsStudent from "./pages/LoginAsStudent";
-import LoginAsLecturer from "./pages/LoginAsLecturer";
+import LoginAsStudent from "./pages/auth/LoginAsStudent";
+import LoginAsLecturer from "./pages/auth/LoginAsLecturer";
 import LecturerNavigation from "./components/LecturerNavigation";
-import LectuerProfile from "./pages/LecturerProfile";
-import LecturerViewResult from "./pages/LecturerViewResult";
-import CreateAccount from "./pages/CreateAccount";
-import UploadResult from "./pages/UploadResult";
+import LectuerProfile from "./pages/app/LecturerProfile";
+import LecturerViewResult from "./pages/app/LecturerViewResult";
+import CreateAccount from "./pages/auth/CreateAccount";
+import UploadResult from "./pages/app/UploadResult";
 import HomePage from "./pages/HomePage";
 import { useUser } from "./context/UserContext";
 

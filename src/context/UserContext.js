@@ -1,5 +1,11 @@
-import {createContext, useContext, useEffect, useReducer, useState} from "react";
-import { useCookies } from "react-cookie";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useReducer,
+    useState,
+} from "react";
+import {useCookies} from "react-cookie";
 
 export const UserContext = createContext();
 
@@ -7,7 +13,7 @@ export const useUser = () => useContext(UserContext);
 
 const initialState = {
     user: null,
-    results: []
+    results: [],
 };
 
 const actionTypes = {
@@ -36,7 +42,6 @@ const reducer = (state, action) => {
     }
 };
 
-
 export const UserProvider = ({children}) => {
     // const [sa``, setUserState] = useState({});
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -55,15 +60,15 @@ export const UserProvider = ({children}) => {
         })
             .then(async (res) => {
                 // console.log(res);
-                if (!res.ok) throw new Error(await res.text());
+
+                if (!res.ok) throw new Error(JSON.stringify(await res.json()));
                 return res.json();
             })
             .then((data) => {
                 dispatch({type: actionTypes.SIGN_IN, payload: data});
 
                 // console.log(data);
-            })
-        
+            });
     };
 
     const studentRegister = async (data) => {
@@ -78,15 +83,15 @@ export const UserProvider = ({children}) => {
         })
             .then(async (res) => {
                 // console.log(res);
-                if (!res.ok) throw new Error(await res.text());
+                if (!res.ok) throw new Error(JSON.stringify(await res.json()));
+
                 return res.json();
             })
             .then((data) => {
                 dispatch({type: actionTypes.SIGN_IN, payload: data});
 
                 // console.log(data);
-            })
-        
+            });
     };
 
     const lecturerRegister = async (data) => {
@@ -101,15 +106,15 @@ export const UserProvider = ({children}) => {
         })
             .then(async (res) => {
                 // console.log(res);
-                if (!res.ok) throw new Error(await res.text());
+                if (!res.ok) throw new Error(JSON.stringify(await res.json()));
+
                 return res.json();
             })
             .then((data) => {
                 dispatch({type: actionTypes.SIGN_IN, payload: data});
 
                 // console.log(data);
-            })
-        
+            });
     };
 
     const lecturerSignIn = async (staffId, password) => {
@@ -123,15 +128,15 @@ export const UserProvider = ({children}) => {
         })
             .then(async (res) => {
                 // console.log(res);
-                if (!res.ok) throw new Error(await res.text());
+                if (!res.ok) throw new Error(JSON.stringify(await res.json()));
+
                 return res.json();
             })
             .then((data) => {
                 dispatch({type: actionTypes.SIGN_IN, payload: data});
-
+                return data;
                 // console.log(data);
-            })
-        
+            });
     };
 
     const signUp = () => {};
@@ -139,19 +144,29 @@ export const UserProvider = ({children}) => {
     const signOut = async () => {
         return fetch("/api/logout", {
             method: "GET",
-            credentials: "include"
-        }).then((res) => {
-            // console.log(res);
-            if (!res.ok) throw new Error();
-            console.log("logged out");
-            dispatch({type: actionTypes.SIGN_OUT});
-            removeCookie("user", {
-                secure: false,
-                maxAge: 3.1536e10,
-            });
-        }).catch((error) => {
-            console.log(error);
+            credentials: "include",
         })
+            .then((res) => {
+                // console.log(res);
+                if (!res.ok) throw new Error();
+                console.log("logged out");
+                dispatch({type: actionTypes.SIGN_OUT});
+                removeCookie("user", {
+                    secure: false,
+                    maxAge: 3.1536e10,
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const sessionSignOut = async () => {
+        dispatch({type: actionTypes.SIGN_OUT});
+        removeCookie("user", {
+            secure: false,
+            maxAge: 3.1536e10,
+        });
     };
 
     const getStudentProfile = async () => {
@@ -191,20 +206,30 @@ export const UserProvider = ({children}) => {
             });
     };
 
-
-    const getResult = async () => {
-
-    }
+    const getResult = async () => {};
 
     useEffect(() => {
         console.log("sign back in", state, cookie);
         dispatch({type: actionTypes.SIGN_IN, payload: cookie["user"]});
         setAppIsReady(true);
-    }, [])
+    }, []);
 
     return (
         <UserContext.Provider
-            value={{state, appIsReady, studentSignIn, lecturerSignIn, signOut,  getStudentProfile, getLecturerProfile, signUp, signOut, studentRegister, lecturerRegister}}
+            value={{
+                state,
+                appIsReady,
+                studentSignIn,
+                lecturerSignIn,
+                signOut,
+                getStudentProfile,
+                getLecturerProfile,
+                signUp,
+                signOut,
+                sessionSignOut,
+                studentRegister,
+                lecturerRegister,
+            }}
         >
             {children}
         </UserContext.Provider>

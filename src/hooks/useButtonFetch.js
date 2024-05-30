@@ -1,6 +1,6 @@
 import {useState, useEffect, memo, useMemo} from "react";
 
-function useButtonFetch(url, options, responseEncoding="json") {
+function useButtonFetch(url, options) {
     const [data, setData] = useState(null);
     const reqOptions = useMemo(() => options, [JSON.stringify(options)])
     const [loading, setLoading] = useState(true);
@@ -26,22 +26,15 @@ function useButtonFetch(url, options, responseEncoding="json") {
 
                 const response = await fetch(url, reqOptions);
                 if (!response.ok) {
-                    throw new Error(await response.text());
+                    throw new Error(JSON.stringify(await response.json()));
                 }
 
-                let data;
-                if (responseEncoding == "json") {
-                    data = await response.json();
-                }
-
-                else if (responseEncoding == "text") {
-                    data = await response.text();
-                } 
+                const data = await response.json();
                 setData(data);
 
             } catch (error) {
                 console.log(error);
-                setError(error.message);
+                setError(JSON.parse(error.message));
             } finally {
                 setLoading(false);
             }

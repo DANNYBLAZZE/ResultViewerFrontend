@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {useUser} from "../context/UserContext";
+import {useUser} from "../../context/UserContext";
 import {CircularProgress} from "@mui/material";
 import clsx from "clsx";
 
@@ -20,8 +20,8 @@ export default function LoginAsStudent() {
                 navigate("/student/home");
             })
             .catch((error) => {
-                console.log(error.message);
-                setError(error.message);
+                console.log(error);
+                setError(JSON.parse(error.message));
             })
             .finally(() => {
                 setLoading(false);
@@ -38,7 +38,7 @@ export default function LoginAsStudent() {
 
                 {error && (
                     <div className="bg-red-400 border-2 border-red-500 px-3 py-2 rounded-md mb-3">
-                        {error}
+                        {error.message}
                     </div>
                 )}
                 <div className="w-full px-3">
@@ -69,15 +69,15 @@ export default function LoginAsStudent() {
                         onClick={() => onSubmit()}
                         style={{backgroundColor: "#17A2B8"}}
                     >
-                            <div>Login</div>
+                            Login
                     </button>
-                    <div
-                        className="mt-5 text-center"
+                    <a
+                        className="mt-5 block text-center"
                         style={{color: "#17A2B8"}}
                         onClick={() => navigate("/login/lecturer")}
                     >
                         Login as Lectuer
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import Select from "@mui/material/Select";
-import SelectUserAccount from "../components/SelectUserAccount";
+import SelectUserAccount from "../../components/SelectUserAccount";
 import {useNavigate} from "react-router-dom";
-import AddDetails from "../components/AddDetails";
-import {useUser} from "../context/UserContext";
+import AddDetails from "../../components/AddDetails";
+import {useUser} from "../../context/UserContext";
 
 export default function CreateAccount() {
     const {studentRegister, lecturerRegister} = useUser();
@@ -54,7 +54,7 @@ export default function CreateAccount() {
                 navigate(`/student/home`);
             })
             .catch((error) => {
-                setError(error.message);
+                setError(JSON.parse(error.message));
             })
             .finally(() => {
                 setLoading(false);
@@ -74,7 +74,8 @@ export default function CreateAccount() {
                 navigate(`/lecturer/home`);
             })
             .catch((error) => {
-                setError(error.message);
+                console.log(error.message);
+                setError(JSON.parse(error.message));
             })
             .finally(() => {
                 setLoading(false);

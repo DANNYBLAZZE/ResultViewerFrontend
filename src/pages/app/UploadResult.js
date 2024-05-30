@@ -1,7 +1,8 @@
-import React, {useState} from "react";
-import useButtonFetch from "../hooks/useButtonFetch";
+import React, {useEffect, useState} from "react";
+import useButtonFetch from "../../hooks/useButtonFetch";
 import {CircularProgress} from "@mui/material";
 import clsx from "clsx";
+import SessionExpired from "../../components/SessionExpired";
 
 export default function UploadResult() {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -12,8 +13,7 @@ export default function UploadResult() {
 
     const {data, loading, error, triggerFetch} = useButtonFetch(
         "/api/lecturer/upload-result",
-        reqBody,
-        "text"
+        reqBody
     );
 
     const handleFileChange = (event) => {
@@ -32,6 +32,8 @@ export default function UploadResult() {
         setReqBody({...reqBody, body: formData});
         triggerFetch();
     };
+
+    console.log(error);
 
     return (
         <div>
@@ -52,12 +54,15 @@ export default function UploadResult() {
             </div>
             {data && (
                 <div className="bg-green-200 mt-5 px-4 py-2 rounded-md border-2 border-green-500">
-                    {data}
+                    {data.message}
                 </div>
             )}
-            {error && (
+
+            {error && error.message == "Not Authorized" && <SessionExpired />}
+
+            {error && error.message !== "Not Authorized" && (
                 <div className="bg-red-200 mt-5 px-4 py-2 rounded-md border-2 border-red-500">
-                    {error}
+                    {error.message}
                 </div>
             )}
         </div>
