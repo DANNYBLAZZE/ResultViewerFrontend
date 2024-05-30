@@ -70,13 +70,13 @@ export default function LoginAsLecturer() {
                     >
                         Login
                     </button>
-                    <div
+                    <a
                         className="mt-5 text-center"
                         style={{color: "#17A2B8"}}
                         onClick={() => navigate("/login/student")}
                     >
                         Login as Student
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

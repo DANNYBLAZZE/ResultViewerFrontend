@@ -20,7 +20,7 @@ export default function SelectUserAccount({setRole, formData, setFormData, roles
                 <div className="text-4xl font-bold mb-12 self-start">
                     Create Account
                 </div>
-                <div className="border-2 p-5 flex flex-col gap-1 w-5/6 rounded-lg">
+                <div className="border-2 p-5 flex flex-col gap-1 w-full md:w-5/6 rounded-lg">
                     <div className="text-gray-500 mb-4 text-lg">Complete the form below</div>
                     <div className="flex flex-row gap-3">
                         <div className="flex flex-row w-full gap-3 justify-between items-center">
@@ -33,50 +33,22 @@ export default function SelectUserAccount({setRole, formData, setFormData, roles
                                     placeholder={fields[role]["placeholder"]}
                                 />
                             </div>
-                            <div className="flex-1">
-                                <div className="mb-2">Select Category</div>
-                                <Select
-                                    value={role}
-                                    // sx={{
-                                    //     "& .MuiInputBase-root": {
-                                    //         width: "100%",
-                                    //         backgroundColor: "red"
-                                    //     },
-                                    // }}
-                                    MenuProps={{
-                                        classes: {
-                                            paper: {
-                                                maxHeight: "100px"
-                                            }
-                                        }
-                                    }}
-                                    onChange={(ev) => changeRole(ev.target.value)}
-                                >
-                                    {roles.map((item) => {
-                                        return (
-                                            <MenuItem value={item}>
-                                                {item}
-                                            </MenuItem>
-                                        );
-                                    })}
-                                </Select>
-                            </div>
                         </div>
                     </div>
-                    <div
+                    <button
                         className="text-white px-10 py-2 text-center rounded-md mt-4"
                         onClick={() => changePage(1)}
                         style={{backgroundColor: "#17A2B8"}}
                     >
                         Proceed
-                    </div>
-                    <div
-                        className="ml-auto mt-2"
+                    </button>
+                    <a
+                        className="ml-auto mt-2 cursor-pointer"
                         style={{color: "#17A2B8"}}
                         onClick={() => navigate("/login")}
                     >
                         Already have an account?
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

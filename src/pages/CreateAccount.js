@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import AddDetails from "../components/AddDetails";
 import {useUser} from "../context/UserContext";
 
-export default function ChooseRole() {
+export default function CreateAccount() {
     const {studentRegister, lecturerRegister} = useUser();
     const roles = ["STUDENT", "LECTURER"];
     const [role, setRole] = useState("STUDENT");

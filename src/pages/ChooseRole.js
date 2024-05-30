@@ -18,9 +18,9 @@ export default function ChooseRole() {
                 <div className="text-4xl font-bold mb-12 self-start">
                     Login Portal
                 </div>
-                <div className="flex flex-col gap-1 w-3/4">
+                <div className="flex flex-col gap-1 w-full md:w-3/4">
                     <div>
-                        <div className="text-lg text-center">
+                        <div className="text-lg text-center tracking-wider">
                             SELECT USER CATEGORY
                         </div>
                     </div>
@@ -38,15 +38,15 @@ export default function ChooseRole() {
                                 return <MenuItem value={item}>{item}</MenuItem>;
                             })}
                         </Select>
-                        <div
+                        <button
                             className="text-white px-10 py-2 text-center rounded-md"
                             onClick={() => onSubmit()}
                             style={{backgroundColor: "#17A2B8"}}
                         >
                             Go to Login
-                        </div>
+                        </button>
                     </div>
-                    <div className="ml-auto mt-2" style={{color: "#17A2B8"}} onClick={() => navigate("/create-account")}>Don't have an account?</div>
+                    <a className="ml-auto mt-2 cursor-pointer" style={{color: "#17A2B8"}} onClick={() => navigate("/create-account")}>Don't have an account?</a>
                 </div>
             </div>
         </div>
