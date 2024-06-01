@@ -2,9 +2,18 @@ import {useNavigate} from "react-router-dom";
 import React from "react";
 import Select from "@mui/material/Select";
 import {MenuItem} from "@mui/material";
-import MaterialCSS from "./material.css"
+import MaterialCSS from "./material.css";
 
-export default function SelectUserAccount({setRole, formData, setFormData, roles, changePage, fields, role, changeRole}) {
+export default function SelectUserAccount({
+    setRole,
+    formData,
+    setFormData,
+    roles,
+    changePage,
+    fields,
+    role,
+    changeRole,
+}) {
     const navigate = useNavigate();
 
     const onChangeText = (key, value) => {
@@ -21,17 +30,53 @@ export default function SelectUserAccount({setRole, formData, setFormData, roles
                     Create Account
                 </div>
                 <div className="border-2 p-5 flex flex-col gap-1 w-full md:w-5/6 rounded-lg">
-                    <div className="text-gray-500 mb-4 text-lg">Complete the form below</div>
+                    <div className="text-gray-500 mb-4 text-lg">
+                        Complete the form below
+                    </div>
                     <div className="flex flex-row gap-3">
-                        <div className="flex flex-row w-full gap-3 justify-between items-center">
+                        <div className="flex flex-col items-stretch md:flex-row w-full gap-3 justify-between md:items-center">
                             <div className="flex-1">
-                                <div className="mb-2">{fields[role]["fieldName"]}</div>
+                                <div className="mb-2">
+                                    {fields[role]["fieldName"]}
+                                </div>
                                 <input
                                     className="w-full bg-gray-100 px-3 py-2 rounded-md"
                                     value={formData.id}
-                                    onChange={(ev) => onChangeText("id", ev.target.value)}
+                                    onChange={(ev) =>
+                                        onChangeText("id", ev.target.value)
+                                    }
                                     placeholder={fields[role]["placeholder"]}
                                 />
+                            </div>
+                            <div className="flex-1">
+                                <div className="mb-2">Select Category</div>
+                                <Select
+                                    value={role}
+                                    // sx={{
+                                    //     "& .MuiInputBase-root": {
+                                    //         width: "100%",
+                                    //         backgroundColor: "red"
+                                    //     },
+                                    // }}
+                                    MenuProps={{
+                                        classes: {
+                                            paper: {
+                                                maxHeight: "100px",
+                                            },
+                                        },
+                                    }}
+                                    onChange={(ev) =>
+                                        changeRole(ev.target.value)
+                                    }
+                                >
+                                    {roles.map((item) => {
+                                        return (
+                                            <MenuItem value={item}>
+                                                {item}
+                                            </MenuItem>
+                                        );
+                                    })}
+                                </Select>
                             </div>
                         </div>
                     </div>
