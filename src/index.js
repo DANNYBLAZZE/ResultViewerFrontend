@@ -9,10 +9,10 @@ import AppProvider from "./AppProvider";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
-        <UserProvider>
+        <AppProvider>
             <BrowserRouter>
                 <App />
             </BrowserRouter>
-        </UserProvider>
+        </AppProvider>
     </React.StrictMode>
 );

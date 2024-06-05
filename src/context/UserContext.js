@@ -5,7 +5,9 @@ import {
     useReducer,
     useState,
 } from "react";
+import {useQuery} from "@tanstack/react-query";
 import {useCookies} from "react-cookie";
+import axios from "axios";
 
 export const UserContext = createContext();
 
@@ -49,107 +51,51 @@ export const UserProvider = ({children}) => {
     const [appIsReady, setAppIsReady] = useState(false);
 
     const studentSignIn = async (mat_no, password) => {
-        console.log(mat_no, password);
-        return fetch("/api/login/student", {
-            method: "POST",
-            body: JSON.stringify({mat_no: mat_no, password: password}),
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        })
-            .then(async (res) => {
-                // console.log(res);
-
-                if (!res.ok) throw new Error(JSON.stringify(await res.json()));
-                return res.json();
-            })
+        return axios
+            .post(
+                "/api/login/student",
+                {mat_no: mat_no, password: password},
+                {credentials: "include"}
+            )
             .then((data) => {
                 dispatch({type: actionTypes.SIGN_IN, payload: data});
-
-                // console.log(data);
+                return data;
             });
     };
 
     const studentRegister = async (data) => {
-        console.log(data);
-        return fetch("/api/register/student", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        })
-            .then(async (res) => {
-                // console.log(res);
-                if (!res.ok) throw new Error(JSON.stringify(await res.json()));
-
-                return res.json();
-            })
+        return axios
+            .post("/api/register/student", data, {credentials: "include"})
             .then((data) => {
                 dispatch({type: actionTypes.SIGN_IN, payload: data});
-
-                // console.log(data);
             });
     };
 
     const lecturerRegister = async (data) => {
-        console.log(data);
-        return fetch("/api/register/lecturer", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        })
-            .then(async (res) => {
-                // console.log(res);
-                if (!res.ok) throw new Error(JSON.stringify(await res.json()));
-
-                return res.json();
-            })
+        return axios
+            .post("/api/register/lecturer", data, {credentials: "include"})
             .then((data) => {
                 dispatch({type: actionTypes.SIGN_IN, payload: data});
-
-                // console.log(data);
             });
     };
 
     const lecturerSignIn = async (staffId, password) => {
-        return fetch("/api/login/lecturer", {
-            method: "POST",
-            body: JSON.stringify({staff_id: staffId, password: password}),
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        })
-            .then(async (res) => {
-                // console.log(res);
-                if (!res.ok) throw new Error(JSON.stringify(await res.json()));
-
-                return res.json();
-            })
+        return axios
+            .post(
+                "/api/login/lecturer",
+                {staff_id: staffId, password: password},
+                {credentials: "include"}
+            )
             .then((data) => {
                 dispatch({type: actionTypes.SIGN_IN, payload: data});
                 return data;
-                // console.log(data);
             });
     };
 
-    const signUp = () => {};
-
     const signOut = async () => {
-        return fetch("/api/logout", {
-            method: "GET",
-            credentials: "include",
-        })
-            .then((res) => {
-                // console.log(res);
-                if (!res.ok) throw new Error();
-                console.log("logged out");
+        return axios
+            .get("/api/logout", {credentials: "include"})
+            .then(() => {
                 dispatch({type: actionTypes.SIGN_OUT});
                 removeCookie("user", {
                     secure: false,
@@ -169,45 +115,6 @@ export const UserProvider = ({children}) => {
         });
     };
 
-    const getStudentProfile = async () => {
-        return fetch(`/api/student/get_details`, {
-            method: "GET",
-            credentials: "include",
-        })
-            .then((res) => {
-                if (!res.ok) throw new Error();
-                return res.json();
-            })
-            .then((data) => {
-                console.log(data);
-                return data;
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-    const getLecturerProfile = async () => {
-        return fetch(`/api/lecturer/get_details`, {
-            method: "GET",
-            credentials: "include",
-        })
-            .then((res) => {
-                if (!res.ok) throw new Error();
-                return res.json();
-            })
-            .then((data) => {
-                console.log(data);
-                return data;
-            })
-            .catch((error) => {
-                console.log(error);
-                return [];
-            });
-    };
-
-    const getResult = async () => {};
-
     useEffect(() => {
         console.log("sign back in", state, cookie);
         dispatch({type: actionTypes.SIGN_IN, payload: cookie["user"]});
@@ -222,9 +129,6 @@ export const UserProvider = ({children}) => {
                 studentSignIn,
                 lecturerSignIn,
                 signOut,
-                getStudentProfile,
-                getLecturerProfile,
-                signUp,
                 signOut,
                 sessionSignOut,
                 studentRegister,

@@ -1,17 +1,32 @@
 import React, {useEffect, useState} from "react";
 import clsx from "clsx";
 import BlankProfile from "../img/blank-profile.png";
-import useFetch from "../hooks/useFetch";
 import SessionExpired from "./SessionExpired";
+import {useQuery} from "@tanstack/react-query";
+import axios from "axios";
 
 export default function Profile({fields, profileUrl}) {
-    const {data: userData, error, loading} = useFetch(profileUrl, {method: "GET", credentials: "include"})
+    // const {data: userData, error, loading} = useFetch(profileUrl, {method: "GET", credentials: "include"})
+    const {
+        data: userData,
+        error,
+        isLoading,
+    } = useQuery({
+        queryKey: ["profile"],
+        queryFn: () => axios.get(profileUrl, {method: "GET", credentials: "include"}),
+    });
 
-    if (loading) return <div></div>
+    
+    if (isLoading) return <div></div>;
 
     return (
         <div>
-            <img src={BlankProfile} width={120} height={50} className="rounded-full ml-4 mb-6"/>
+            <img
+                src={BlankProfile}
+                width={120}
+                height={50}
+                className="rounded-full ml-4 mb-6"
+            />
             <div className="flex flex-col gap-5">
                 {fields.map((item) => {
                     return (
@@ -24,15 +39,13 @@ export default function Profile({fields, profileUrl}) {
                                     item.label == "Department" && "uppercase"
                                 )}
                             >
-                                {userData?.[item.data]}
+                                {userData?.data?.[item.data]}
                             </div>
                         </div>
                     );
                 })}
             </div>
             {error && error.message == "Not Authorized" && <SessionExpired />}
-
-            
         </div>
     );
 }

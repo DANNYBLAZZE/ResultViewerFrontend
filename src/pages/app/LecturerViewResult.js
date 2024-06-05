@@ -1,28 +1,42 @@
 import React, {useMemo, useState} from "react";
-import useFetch from "../../hooks/useFetch";
 import {json} from "react-router-dom";
 import clsx from "clsx";
 import ViewResult from "../../components/ViewResult";
 import {CircularProgress} from "@mui/material";
-import useButtonFetch from "../../hooks/useButtonFetch";
 import SessionExpired from "../../components/SessionExpired";
+import {useQuery} from "@tanstack/react-query";
+import axios from "axios";
+
+const fetchStudentResult = (matNo) => {
+    console.log("refetch");
+    return axios.get(`/api/lecturer/${matNo}/get_result`, {
+        method: "GET",
+        credentials: "include",
+    });
+};
 
 export default function LecturerViewResult() {
     const [search, setSearch] = useState("");
     const [matNoInput, setMatNoInput] = useState("");
 
-    const {data, loading, error, triggerFetch} = useButtonFetch(`/api/lecturer/${matNoInput}/get_result`, {
-        method: "GET",
-        credentials: "include",
+    const {data, error, isLoading, isFetching, refetch} = useQuery({
+        queryKey: ["lecturer-view-result", matNoInput],
+        queryFn: () => fetchStudentResult(matNoInput),
+        enabled: false, 
+        refetchOnWindowFocus: false,
+        placeholderData: previousData => previousData,
+        gcTime: 0
     });
 
-    const onSubmit = () => {
-        
-        // setSearch(`/api/lecturer/${matNoInput}/get_result`);
-        triggerFetch();
-    };
+    const canSend = isLoading || isFetching;
 
-    console.log("loading", loading);
+    console.log(isFetching);
+    const onSubmit = () => {
+        setSearch(search);
+        refetch();
+    }
+
+    console.log(isLoading);
 
     return (
         <div className="min-h-screen">
@@ -39,23 +53,23 @@ export default function LecturerViewResult() {
                     />
                     <div className="flex gap-1">
                         <button
-                            disabled={loading || matNoInput.length == 0}
-                            className={clsx("text-white text-center px-3 py-2 flex justify-center items-center rounded-md disabled:cursor-not-allowed disabled:opacity-30")}
+                            disabled={canSend || matNoInput.length == 0}
+                            className={clsx(
+                                "text-white text-center px-3 py-2 flex justify-center items-center rounded-md disabled:cursor-not-allowed disabled:opacity-30"
+                            )}
                             onClick={() => onSubmit()}
                             style={{backgroundColor: "#17A2B8"}}
                         >
                             Check Result
                         </button>
-                        {loading && (
+                        {canSend && (
                             <CircularProgress style={{padding: "8px"}} />
                         )}
                     </div>
                 </div>
             </div>
-            <ViewResult data={data} />
-            {
-                error && error.message == "Not Authorized" && <SessionExpired/>
-            }
+            <ViewResult data={data?.data} />
+            {error && error.message == "Not Authorized" && <SessionExpired />}
         </div>
     );
 }

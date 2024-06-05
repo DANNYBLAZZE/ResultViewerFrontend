@@ -1,20 +1,25 @@
 import React, {useEffect, useState} from "react";
-import useButtonFetch from "../../hooks/useButtonFetch";
 import {CircularProgress} from "@mui/material";
 import clsx from "clsx";
 import SessionExpired from "../../components/SessionExpired";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import axios from "axios";
+
+const uploadResults = (formData) => {
+    return axios.post("/api/lecturer/upload-result", formData, {
+        credentials: "include",
+    });
+};
 
 export default function UploadResult() {
     const [selectedFile, setSelectedFile] = useState(null);
-    const [reqBody, setReqBody] = useState({
-        method: "POST",
-        credentials: "include",
-    });
 
-    const {data, loading, error, triggerFetch} = useButtonFetch(
-        "/api/lecturer/upload-result",
-        reqBody
-    );
+    const {
+        mutate,
+        data,
+        error,
+        isPending: loading,
+    } = useMutation({mutationFn: (formData) => uploadResults(formData)});
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -29,8 +34,7 @@ export default function UploadResult() {
     const uploadFile = (file) => {
         const formData = new FormData();
         formData.append("results", file);
-        setReqBody({...reqBody, body: formData});
-        triggerFetch();
+        mutate(formData);
     };
 
     console.log(error);
@@ -54,7 +58,7 @@ export default function UploadResult() {
             </div>
             {data && (
                 <div className="bg-green-200 mt-5 px-4 py-2 rounded-md border-2 border-green-500">
-                    {data.message}
+                    {data.data.message}
                 </div>
             )}
 
