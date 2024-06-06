@@ -81,12 +81,6 @@ export default function CreateAccount() {
     };
 
     const changePage = (newPage) => {
-        console.log(newPage, page);
-        // if (newPage == 1 && page == 0) {
-        //     setFormData({
-        //         id: formData.id,
-        //     });
-        // }
         setPage(newPage);
     };
 

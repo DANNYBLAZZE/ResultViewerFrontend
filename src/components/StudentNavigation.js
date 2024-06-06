@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from "react";
+import React from "react";
 import Navigation from "./Navigation";
 import {PeopleOutline} from "react-ionicons";
 import {DocumentTextOutline} from "react-ionicons";

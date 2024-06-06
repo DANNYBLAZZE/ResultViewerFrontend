@@ -1,6 +1,5 @@
-import React, {useMemo} from "react";
+import React from "react";
 import ViewResult from "../../components/ViewResult";
-import SessionExpired from "../../components/SessionExpired";
 import {useQuery} from "@tanstack/react-query";
 import instance from "../../utils/instance";
 

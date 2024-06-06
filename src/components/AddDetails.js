@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import React from "react";
+import {useNavigate} from "react-router-dom";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import clsx from "clsx";
 
@@ -12,8 +12,6 @@ export default function AddDetails({
     error,
     onSubmit,
 }) {
-    const navigate = useNavigate();
-
     const onChangeText = (key, value) => {
         setFormData({...formData, [key]: value});
     };

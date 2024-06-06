@@ -7,6 +7,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
+            // do not retry if the server sends a response
             retry: (failureCount, error) => {
                 if (error.response) {
                     return false;

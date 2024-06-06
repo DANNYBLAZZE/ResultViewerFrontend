@@ -1,13 +1,6 @@
 import React, {useEffect} from "react";
-import {useCookies} from "react-cookie";
-import {
-    Navigate,
-    Outlet,
-    useLocation,
-    useNavigate,
-    useParams,
-} from "react-router-dom";
-import { useSession } from "../context/SessionContext";
+import {Navigate, Outlet, useLocation, useNavigate} from "react-router-dom";
+import {useSession} from "../context/SessionContext";
 
 export default function HomePage() {
     const {state, appIsReady} = useSession();
@@ -18,14 +11,12 @@ export default function HomePage() {
     useEffect(() => {
         if (!appIsReady) return;
 
+        // this redirects the user to the appropriate home page based on their role
         if (currentPath == "/" && state.user) {
-            console.log("state", state.user);
             if (state.user.role == "student") navigate("/student/home");
             else navigate("/lecturer/home");
         }
     }, [appIsReady, state]);
-
-    console.log("state", state);
 
     if (!appIsReady) return;
 

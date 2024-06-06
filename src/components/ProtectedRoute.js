@@ -4,7 +4,6 @@ import { useSession } from "../context/SessionContext";
 
 export default function ProtectedRoute() {
     const {state} = useSession();
-    console.log("leave");
     
     return (state.user) ? <Outlet /> : <Navigate to="/login"/>;
 }

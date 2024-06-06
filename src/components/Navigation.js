@@ -1,10 +1,10 @@
-import React, {useEffect, useLayoutEffect, useState} from "react";
-import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
+import React, {useLayoutEffect, useState} from "react";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import clsx from "clsx";
 import MenuIcon from "@mui/icons-material/Menu";
 import {LogOutOutline} from "react-ionicons";
 import {ArrowBackOutline} from "react-ionicons";
-import { useSession } from "../context/SessionContext";
+import {useSession} from "../context/SessionContext";
 
 export default function Navigation({nav, name}) {
     const [currentNav, setCurrentNav] = useState(0);
@@ -33,10 +33,6 @@ export default function Navigation({nav, name}) {
         navigate("/");
     };
 
-    const drawerOpen = (open) => {
-
-    };
-
     return (
         <div className="md:grid md:grid-cols-6">
             <div
@@ -50,11 +46,15 @@ export default function Navigation({nav, name}) {
             <div
                 className={clsx(
                     "fixed bg-white z-40 overflow-hidden h-screen transition-all duration-300 md:static md:col-span-1 flex flex-col items-center border-r-2 ",
-                    navBarOpen ? "w-56 px-3 py-2" : "w-0 px-0 py-2", "md:px-3 md:py-2 md:w-auto"
+                    navBarOpen ? "w-56 px-3 py-2" : "w-0 px-0 py-2",
+                    "md:px-3 md:py-2 md:w-auto"
                 )}
             >
-                <div className="self-end md:hidden hover:bg-gray-200 p-3 rounded-full mb-2" onClick={() => setNavBarOpen(false)}>
-                    <ArrowBackOutline height="30px" width="30px"/>
+                <div
+                    className="self-end md:hidden hover:bg-gray-200 p-3 rounded-full mb-2"
+                    onClick={() => setNavBarOpen(false)}
+                >
+                    <ArrowBackOutline height="30px" width="30px" />
                     {/* <CloseIcon fontSize="large" className="ml-auto w-full" /> */}
                 </div>
                 <div className="font-bold text-2xl p-3 text-center mt-10 whitespace-nowrap hidden md:block">

@@ -2,10 +2,8 @@ import {useNavigate} from "react-router-dom";
 import React from "react";
 import Select from "@mui/material/Select";
 import {MenuItem} from "@mui/material";
-import MaterialCSS from "./material.css";
 
 export default function SelectUserAccount({
-    setRole,
     formData,
     setFormData,
     roles,

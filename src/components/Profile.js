@@ -1,13 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import clsx from "clsx";
 import BlankProfile from "../img/blank-profile.png";
-import SessionExpired from "./SessionExpired";
 import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
 import instance from "../utils/instance";
 
 export default function Profile({fields, profileUrl}) {
-    // const {data: userData, error, loading} = useFetch(profileUrl, {method: "GET", credentials: "include"})
     const {
         data: userData,
         error,
@@ -18,10 +15,6 @@ export default function Profile({fields, profileUrl}) {
     });
 
     
-    if (isLoading) return <div></div>;
-
-    console.log("error", error);
-
     return (
         <div>
             <img
@@ -48,7 +41,6 @@ export default function Profile({fields, profileUrl}) {
                     );
                 })}
             </div>
-            {/* {error && error.response.message == "Not Authorized" && <SessionExpired />} */}
         </div>
     );
 }
