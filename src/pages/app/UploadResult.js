@@ -1,14 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {CircularProgress} from "@mui/material";
-import clsx from "clsx";
-import SessionExpired from "../../components/SessionExpired";
-import {useMutation, useQuery} from "@tanstack/react-query";
-import axios from "axios";
+import {useMutation} from "@tanstack/react-query";
+import instance from "../../utils/instance";
 
 const uploadResults = (formData) => {
-    return axios.post("/api/lecturer/upload-result", formData, {
-        credentials: "include",
-    });
+    return instance.post("/api/lecturer/upload-result", formData);
 };
 
 export default function UploadResult() {
@@ -62,9 +58,7 @@ export default function UploadResult() {
                 </div>
             )}
 
-            {error && error.message == "Not Authorized" && <SessionExpired />}
-
-            {error && error.message !== "Not Authorized" && (
+            {error && (
                 <div className="bg-red-200 mt-5 px-4 py-2 rounded-md border-2 border-red-500">
                     {error.message}
                 </div>

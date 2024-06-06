@@ -2,15 +2,15 @@ import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
 import clsx from "clsx";
 import MenuIcon from "@mui/icons-material/Menu";
-import {useUser} from "../context/UserContext";
 import {LogOutOutline} from "react-ionicons";
 import {ArrowBackOutline} from "react-ionicons";
+import { useSession } from "../context/SessionContext";
 
 export default function Navigation({nav, name}) {
     const [currentNav, setCurrentNav] = useState(0);
     const [navBarOpen, setNavBarOpen] = useState(false);
     const location = useLocation();
-    const {signOut} = useUser();
+    const {signOut} = useSession();
     const navigate = useNavigate();
 
     useLayoutEffect(() => {

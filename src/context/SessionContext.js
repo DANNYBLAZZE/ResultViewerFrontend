@@ -8,10 +8,14 @@ import {
 import {useQuery} from "@tanstack/react-query";
 import {useCookies} from "react-cookie";
 import axios from "axios";
+import instance from "../utils/instance";
+import { responsiveFontSizes } from "@mui/material";
+import SessionExpired from "../components/SessionExpired";
 
-export const UserContext = createContext();
 
-export const useUser = () => useContext(UserContext);
+export const SessionContext = createContext();
+
+export const useSession = () => useContext(SessionContext);
 
 const initialState = {
     user: null,
@@ -44,11 +48,12 @@ const reducer = (state, action) => {
     }
 };
 
-export const UserProvider = ({children}) => {
+export const SessionProvider = ({children}) => {
     // const [sa``, setUserState] = useState({});
     const [state, dispatch] = useReducer(reducer, initialState);
     const [cookie, setCookie, removeCookie] = useCookies(["user"]);
     const [appIsReady, setAppIsReady] = useState(false);
+    const [sessionExpired, setSessionExpired] = useState(false);
 
     const studentSignIn = async (mat_no, password) => {
         return axios
@@ -109,6 +114,7 @@ export const UserProvider = ({children}) => {
 
     const sessionSignOut = async () => {
         dispatch({type: actionTypes.SIGN_OUT});
+        setSessionExpired(false);
         removeCookie("user", {
             secure: false,
             maxAge: 3.1536e10,
@@ -121,8 +127,23 @@ export const UserProvider = ({children}) => {
         setAppIsReady(true);
     }, []);
 
+    // axios interceptor to check if a user session is active
+    useEffect(() => {
+        const instanceId = instance.interceptors.response.use(
+            (response) => response, 
+            (error) => {
+                if (error.response.status == 401) {
+                    setSessionExpired(true);
+                }
+                console.log(error);
+                return Promise.reject(error);
+            }
+        )
+        return () => instance.interceptors.response.eject(instanceId);
+    }, [])
+
     return (
-        <UserContext.Provider
+        <SessionContext.Provider
             value={{
                 state,
                 appIsReady,
@@ -136,6 +157,7 @@ export const UserProvider = ({children}) => {
             }}
         >
             {children}
-        </UserContext.Provider>
+            {sessionExpired && <SessionExpired/>}
+        </SessionContext.Provider>
     );
 };

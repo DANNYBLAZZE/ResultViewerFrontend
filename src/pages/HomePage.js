@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {useCookies} from "react-cookie";
-import {useUser} from "../context/UserContext";
 import {
     Navigate,
     Outlet,
@@ -8,9 +7,10 @@ import {
     useNavigate,
     useParams,
 } from "react-router-dom";
+import { useSession } from "../context/SessionContext";
 
 export default function HomePage() {
-    const {state, appIsReady} = useUser();
+    const {state, appIsReady} = useSession();
     const location = useLocation();
     const currentPath = location.pathname;
     const navigate = useNavigate();

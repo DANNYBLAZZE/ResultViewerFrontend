@@ -4,6 +4,7 @@ import BlankProfile from "../img/blank-profile.png";
 import SessionExpired from "./SessionExpired";
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
+import instance from "../utils/instance";
 
 export default function Profile({fields, profileUrl}) {
     // const {data: userData, error, loading} = useFetch(profileUrl, {method: "GET", credentials: "include"})
@@ -13,11 +14,13 @@ export default function Profile({fields, profileUrl}) {
         isLoading,
     } = useQuery({
         queryKey: ["profile"],
-        queryFn: () => axios.get(profileUrl, {method: "GET", credentials: "include"}),
+        queryFn: () => instance.get(profileUrl, {method: "GET"}),
     });
 
     
     if (isLoading) return <div></div>;
+
+    console.log("error", error);
 
     return (
         <div>
@@ -45,7 +48,7 @@ export default function Profile({fields, profileUrl}) {
                     );
                 })}
             </div>
-            {error && error.message == "Not Authorized" && <SessionExpired />}
+            {/* {error && error.response.message == "Not Authorized" && <SessionExpired />} */}
         </div>
     );
 }

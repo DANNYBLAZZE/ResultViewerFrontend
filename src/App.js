@@ -14,10 +14,10 @@ import LecturerViewResult from "./pages/app/LecturerViewResult";
 import CreateAccount from "./pages/auth/CreateAccount";
 import UploadResult from "./pages/app/UploadResult";
 import HomePage from "./pages/HomePage";
-import { useUser } from "./context/UserContext";
+import { useSession } from "./context/SessionContext";
 
 export default function App() {
-    const {appIsReady} = useUser();
+    const {appIsReady} = useSession();
 
     return (
         <Routes>

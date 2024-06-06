@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {useUser} from "../context/UserContext";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import clsx from "clsx";
 
@@ -13,7 +12,6 @@ export default function AddDetails({
     error,
     onSubmit,
 }) {
-    const {lecturerSignIn} = useUser();
     const navigate = useNavigate();
 
     const onChangeText = (key, value) => {

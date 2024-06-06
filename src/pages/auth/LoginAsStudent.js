@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {useUser} from "../../context/UserContext";
+import {useSession} from "../../context/SessionContext";
 import {CircularProgress} from "@mui/material";
 import clsx from "clsx";
 
 export default function LoginAsStudent() {
-    const {studentSignIn} = useUser();
+    const {studentSignIn} = useSession();
     const navigate = useNavigate();
 
     const [matNo, setMatNo] = useState("");
@@ -20,8 +20,7 @@ export default function LoginAsStudent() {
                 navigate("/student/home");
             })
             .catch((error) => {
-                console.log(error);
-                setError(JSON.parse(error.message));
+                setError(error.response.data);
             })
             .finally(() => {
                 setLoading(false);

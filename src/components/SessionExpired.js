@@ -1,11 +1,11 @@
 import React from "react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../context/UserContext";
+import { useSession } from "../context/SessionContext";
 
 export default function SessionExpired() {
     const navigate = useNavigate();
-    const {sessionSignOut} = useUser();
+    const {sessionSignOut} = useSession();
 
     const onSignOut = () => {
         sessionSignOut();

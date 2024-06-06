@@ -3,10 +3,10 @@ import Select from "@mui/material/Select";
 import SelectUserAccount from "../../components/SelectUserAccount";
 import {useNavigate} from "react-router-dom";
 import AddDetails from "../../components/AddDetails";
-import {useUser} from "../../context/UserContext";
+import { useSession } from "../../context/SessionContext";
 
 export default function CreateAccount() {
-    const {studentRegister, lecturerRegister} = useUser();
+    const {studentRegister, lecturerRegister} = useSession();
     const roles = ["STUDENT", "LECTURER"];
     const [role, setRole] = useState("STUDENT");
     const [page, setPage] = useState(0);

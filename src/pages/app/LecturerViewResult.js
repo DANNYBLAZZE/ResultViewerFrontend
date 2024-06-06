@@ -1,18 +1,12 @@
-import React, {useMemo, useState} from "react";
-import {json} from "react-router-dom";
+import React, {useState} from "react";
 import clsx from "clsx";
 import ViewResult from "../../components/ViewResult";
 import {CircularProgress} from "@mui/material";
-import SessionExpired from "../../components/SessionExpired";
 import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
+import instance from "../../utils/instance";
 
 const fetchStudentResult = (matNo) => {
-    console.log("refetch");
-    return axios.get(`/api/lecturer/${matNo}/get_result`, {
-        method: "GET",
-        credentials: "include",
-    });
+    return instance.get(`/api/lecturer/${matNo}/get_result`);
 };
 
 export default function LecturerViewResult() {
@@ -69,7 +63,6 @@ export default function LecturerViewResult() {
                 </div>
             </div>
             <ViewResult data={data?.data} />
-            {error && error.message == "Not Authorized" && <SessionExpired />}
         </div>
     );
 }

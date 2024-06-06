@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {useUser} from "../../context/UserContext";
+import {useSession} from "../../context/SessionContext";
 import clsx from "clsx";
 
 export default function LoginAsLecturer() {
-    const {lecturerSignIn} = useUser();
+    const {lecturerSignIn} = useSession();
     const navigate = useNavigate();
 
     const [staffId, setStaffId] = useState("");
@@ -20,7 +20,7 @@ export default function LoginAsLecturer() {
             })
             .catch((error) => {
                 console.log(error.message);
-                setError(JSON.parse(error.message));
+                setError(error.response.data);
             })
             .finally(() => {
                 setLoading(false);
