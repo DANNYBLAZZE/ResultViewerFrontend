@@ -150,7 +150,6 @@ export const SessionProvider = ({children}) => {
                 studentSignIn,
                 lecturerSignIn,
                 signOut,
-                signOut,
                 sessionSignOut,
                 studentRegister,
                 lecturerRegister,

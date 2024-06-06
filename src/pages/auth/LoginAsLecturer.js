@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useSession} from "../../context/SessionContext";
 import clsx from "clsx";
 
@@ -64,19 +64,23 @@ export default function LoginAsLecturer() {
                     </div>
                     <button
                         disabled={loading}
-                        className={clsx("w-full text-white mt-5 px-10 py-2 text-center rounded-md", loading && "cursor-not-allowed opacity-30")}
+                        className={clsx(
+                            "w-full text-white mt-5 px-10 py-2 text-center rounded-md",
+                            loading && "cursor-not-allowed opacity-30"
+                        )}
                         onClick={() => onSubmit()}
                         style={{backgroundColor: "#17A2B8"}}
                     >
                         Login
                     </button>
-                    <a
-                        className="mt-5 block text-center"
-                        style={{color: "#17A2B8"}}
-                        onClick={() => navigate("/login/student")}
-                    >
-                        Login as Student
-                    </a>
+                    <Link to="/login/student">
+                        <div
+                            className="mt-5 block text-center"
+                            style={{color: "#17A2B8"}}
+                        >
+                            Login as Student
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>

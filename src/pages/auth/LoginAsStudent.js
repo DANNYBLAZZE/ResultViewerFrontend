@@ -1,13 +1,12 @@
 import React, {useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useSession} from "../../context/SessionContext";
 import {CircularProgress} from "@mui/material";
 import clsx from "clsx";
 
 export default function LoginAsStudent() {
-    const {studentSignIn} = useSession();
     const navigate = useNavigate();
-
+    const {studentSignIn} = useSession();
     const [matNo, setMatNo] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -64,19 +63,24 @@ export default function LoginAsStudent() {
                     </div>
                     <button
                         disabled={loading}
-                        className={clsx("w-full text-white mt-5 px-10 py-2 text-center rounded-md", loading && "pointer-events-none cursor-not-allowed opacity-30")}
+                        className={clsx(
+                            "w-full text-white mt-5 px-10 py-2 text-center rounded-md",
+                            loading &&
+                                "pointer-events-none cursor-not-allowed opacity-30"
+                        )}
                         onClick={() => onSubmit()}
                         style={{backgroundColor: "#17A2B8"}}
                     >
-                            Login
+                        Login
                     </button>
-                    <a
-                        className="mt-5 block text-center"
-                        style={{color: "#17A2B8"}}
-                        onClick={() => navigate("/login/lecturer")}
-                    >
-                        Login as Lectuer
-                    </a>
+                    <Link to="/login/lecturer">
+                        <div
+                            className="mt-5 block text-center"
+                            style={{color: "#17A2B8"}}
+                        >
+                            Login as Lectuer
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>

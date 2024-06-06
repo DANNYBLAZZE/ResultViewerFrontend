@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import Select from "@mui/material/Select";
 import SelectUserAccount from "../../components/SelectUserAccount";
 import {useNavigate} from "react-router-dom";
 import AddDetails from "../../components/AddDetails";
@@ -54,7 +53,7 @@ export default function CreateAccount() {
                 navigate(`/student/home`);
             })
             .catch((error) => {
-                setError(JSON.parse(error.message));
+                setError(error.response.data);
             })
             .finally(() => {
                 setLoading(false);
@@ -74,8 +73,7 @@ export default function CreateAccount() {
                 navigate(`/lecturer/home`);
             })
             .catch((error) => {
-                console.log(error.message);
-                setError(JSON.parse(error.message));
+                setError(error.response.data);
             })
             .finally(() => {
                 setLoading(false);
