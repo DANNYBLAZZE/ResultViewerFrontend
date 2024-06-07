@@ -3,6 +3,7 @@ import clsx from "clsx";
 import BlankProfile from "../img/blank-profile.png";
 import {useQuery} from "@tanstack/react-query";
 import instance from "../utils/instance";
+import { CircularProgress } from "@mui/material";
 
 export default function Profile({fields, profileUrl}) {
     const {
@@ -14,7 +15,15 @@ export default function Profile({fields, profileUrl}) {
         queryFn: () => instance.get(profileUrl, {method: "GET"}),
     });
 
-    
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center flex-1">
+                <div>Fetching Profile Information</div>
+                <CircularProgress style={{padding: "10px"}}/>
+            </div>
+        );
+    }
+
     return (
         <div>
             <img

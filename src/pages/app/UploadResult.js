@@ -60,7 +60,7 @@ export default function UploadResult() {
 
             {error && (
                 <div className="bg-red-200 mt-5 px-4 py-2 rounded-md border-2 border-red-500">
-                    {error.message}
+                    {error.response.data.message}
                 </div>
             )}
         </div>
