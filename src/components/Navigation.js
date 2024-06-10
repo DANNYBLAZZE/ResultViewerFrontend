@@ -29,8 +29,9 @@ export default function Navigation({nav, name}) {
     };
 
     const handleSignOut = () => {
-        signOut();
-        navigate("/");
+        signOut().then(() => {
+            navigate("/login");
+        });
     };
 
     return (

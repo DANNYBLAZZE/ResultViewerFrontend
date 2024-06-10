@@ -5,7 +5,7 @@ import {
     useReducer,
     useState,
 } from "react";
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {useCookies} from "react-cookie";
 import axios from "axios";
 import instance from "../utils/instance";
@@ -53,6 +53,7 @@ export const SessionProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [cookie, setCookie, removeCookie] = useCookies(["user"]);
     const [appIsReady, setAppIsReady] = useState(false);
+    const queryClient = useQueryClient();
     const [sessionExpired, setSessionExpired] = useState(false);
 
     const studentSignIn = async (mat_no, password) => {
@@ -101,6 +102,7 @@ export const SessionProvider = ({children}) => {
         return axios
             .get("/api/logout", {credentials: "include"})
             .then(() => {
+                clearQueryData();
                 dispatch({type: actionTypes.SIGN_OUT});
                 removeCookie("user", {
                     secure: false,
@@ -112,7 +114,12 @@ export const SessionProvider = ({children}) => {
             });
     };
 
+    const clearQueryData = () => {
+        queryClient.clear();
+    }
+
     const sessionSignOut = async () => {
+        clearQueryData();
         dispatch({type: actionTypes.SIGN_OUT});
         setSessionExpired(false);
         removeCookie("user", {
